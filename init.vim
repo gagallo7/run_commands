@@ -101,9 +101,6 @@ let g:spacevim_custom_plugins = [
         \ ]
 
 
-let g:fugitive_gitlab_domains = ['http://serv113.corp.eldorado.org.br/gitlab/']
-let g:gitlab_api_keys = {'gitlab.com': 'mPUsQAaQao5_H6LvKzYG'}
-
 " Long arguments multiline BeautyShot coding style indentation
 set cino+=(0
 set cino+=N-s
