@@ -24,26 +24,34 @@
     enable_tabline_filetype_icon = true
     enable_statusline_display_mode = false
 
-    enable_ycm = true
-    default_indent = 4
+    bootstrap_after = "myconfig#after"
     max_column = 100
-
-    windows_leader = '-'
+    enable_insert_leader = false
+    windows_leader ="-"
+    windows_smart_close = "Q"
+    default_indent = 4
+    autcomplete_method = 'deoplete'
+    # tabline_filetype_icon = 1
+    # os_fileformat_icon = 1
+    # enable_vimfiler_gitstatus = 1
 
 
 # Enable autocomplete layer
 [[layers]]
-name = "autocomplete"
+name = 'autocomplete'
 auto-completion-return-key-behavior = "complete"
 auto-completion-tab-key-behavior = "smart"
 
 [[layers]]
-name = "shell"
+name = 'shell'
 default_position = 'top'
 default_height = 30
 
 [[layers]]
 name = "lang#c"
+
+[[layers]]
+name = "indentmove"
 
 [[layers]]
 name = "ctrlp"
@@ -55,14 +63,17 @@ name = "git"
 name = "github"
 
 [[layers]]
-  name = "checkers"
+name = "tmux"
 
-[[custom_plugins]]
-  name = "tpope/vim-fugitive"
-  merged = false
+[[layers]]
+name = "checkers"
 
 [[custom_plugins]]
 name = "vim-scripts/a.vim"
+merged = false
+
+[[custom_plugins]]
+name = "tpope/vim-fugitive"
 merged = false
 
 [[custom_plugins]]
