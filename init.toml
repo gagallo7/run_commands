@@ -27,8 +27,8 @@
     bootstrap_after = "myconfig#after"
     max_column = 100
     enable_insert_leader = false
-    windows_leader ="-"
-    windows_smart_close = "Q"
+    windows_leader = "-"
+    windows_smartclose = "Q"
     default_indent = 4
     autcomplete_method = 'deoplete'
     # tabline_filetype_icon = 1
@@ -51,7 +51,25 @@ default_height = 30
 name = "lang#c"
 
 [[layers]]
+name = "lang#cpp"
+
+[[layers]]
+name = "lang#java"
+
+[[layers]]
+name = "lang#python"
+
+[[layers]]
+name = "lang#shell"
+
+[[layers]]
+name = "lang#vim"
+
+[[layers]]
 name = "indentmove"
+
+[[layers]]
+name = "format"
 
 [[layers]]
 name = "ctrlp"
@@ -67,6 +85,9 @@ name = "tmux"
 
 [[layers]]
 name = "checkers"
+
+[[layers]]
+name = "incsearch"
 
 [[custom_plugins]]
 name = "vim-scripts/a.vim"
