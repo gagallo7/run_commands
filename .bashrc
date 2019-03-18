@@ -28,7 +28,7 @@ shopt -s checkwinsize
 #shopt -s globstar
 
 # make less more friendly for non-text input files, see lesspipe(1)
-[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+#[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
 # set variable identifying the chroot you work in (used in the prompt below)
 if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
@@ -76,9 +76,9 @@ esac
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
     alias ls='ls --color=auto'
-    #alias dir='dir --color=auto'
-    #alias vdir='vdir --color=auto'
-
+    alias dir='dir --color=auto'
+    alias vdir='vdir --color=auto'
+#
     alias grep='grep --color=auto'
     alias fgrep='fgrep --color=auto'
     alias egrep='egrep --color=auto'
@@ -88,13 +88,9 @@ fi
 #export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
 # some more ls aliases
-alias ll='ls -alF'
+alias ll='ls -l'
 alias la='ls -A'
 alias l='ls -CF'
-
-# Add an "alert" alias for long running commands.  Use like so:
-#   sleep 10; alert
-alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
 # Alias definitions.
 # You may want to put all your additions into a separate file like
@@ -109,70 +105,76 @@ fi
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
 if ! shopt -oq posix; then
-  if [ -f ${HOME}/usr/share/bash-completion/bash_completion ]; then
-      . ${HOME}/usr/share/bash-completion/bash_completion
-  elif [ -f /usr/share/bash-completion/bash_completion ]; then
+  if [ -f /usr/share/bash-completion/bash_completion ]; then
     . /usr/share/bash-completion/bash_completion
   elif [ -f /etc/bash_completion ]; then
     . /etc/bash_completion
   fi
 fi
 
-# Configure PS1 variable
-. $HOME/scripts/color_term.sh
-
-export ANDROID_SDK=${HOME}/Android/Sdk
-export ANDROID_HOME=${ANDROID_SDK}
-export ANDROID_NDK=${ANDROID_SDK}/ndk-bundle
-export ANDROID_STUDIO_ROOT=${HOME}/Downloads/software/android-studio
-# export PATH="${ANDROID_SDK}/platform-tools/:${PATH}"
-# export PATH=${ANDROID_SDK}/ndk-bundle/toolchains/llvm/prebuilt/linux-x86_64/bin:${PATH}
-export PATH="${PATH}:${ANDROID_SDK}/platform-tools/"
-export PATH=${PATH}:${ANDROID_SDK}/ndk-bundle/toolchains/llvm/prebuilt/linux-x86_64/bin
-export PATH=/home/guilherme/usr/cmake-3.10.1-Linux-x86_64/bin:${PATH}
-export PATH=/home/guilherme/usr/bin:${PATH}
-export PATH=/home/guilherme/scripts:${PATH}
-
-alias as='adb shell'
-alias als='as ls --color=auto'
-alias cls='as rm -Rf /data/local/tmp/*'
-alias sts='stty sane'
-alias ag='~/usr/bin/ag --path-to-ignore=.ignore'
-alias aun='adb uninstall com.lge.beautyshot.beautyapp'
-
-# Pyenv configuration
-export PATH="~/.pyenv/bin:$PATH"
-
-export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
-
-
-# Functions
-
-function swap()
+function swap
 {
-    local TMPFILE=tmp.$$
-    mv "$1" $TMPFILE && mv "$2" "$1" && mv $TMPFILE $2
+  local TMPFILE=tmp.$$
+  mv "$1" $TMPFILE
+  mv "$2" "$1"
+  mv $TMPFILE "$2"
 }
-export VIMPAGER_RC=~/.vimrc_alt
 
-# COLORIZE THE OUTPUT OF "LESS" TO MAKE MANPAGES MORE READABLE
-export LESS_TERMCAP_mb=$'\E[01;31m';
-export LESS_TERMCAP_md=$'\E[01;31m';
-export LESS_TERMCAP_me=$'\E[0m';
-export LESS_TERMCAP_se=$'\E[0m';
-export LESS_TERMCAP_so=$'\E[01;44;33m';
-export LESS_TERMCAP_ue=$'\E[0m';
-export LESS_TERMCAP_us=$'\E[01;32m';
 
-# TWEAKING OTHER "LESS" PARAMETERS
-export LESSCHARSET='utf-8';
-export LESS='-i -N -w -z-4 -g -M -R -P%t?f%f :stdin .?pb%pb\%:?lbLine %lb:?bbByte %bb:-...';
+#a wrapper function to keep colors from polluting global space
+function _set_prompt
+{
+    local R="\[\033[0m\]" #reset
+    local B="\[\033[1m\]" #bold
+    local D="\[\033[2m\]" #dim
+    local U="\[\033[4m\]" #underline
+    #took the colors _i_ think are nice and defined as vars
+    local DEFAULT="\[\033[39m\]"
+    local RED="\[\033[91m\]"
+    local GREEN="\[\033[32m\]"
+    local YELLOW="\[\033[93m\]"
+    local BLUE="\[\033[34m\]"
+    local MAGENTA="\[\033[95m\]"
+    local CYAN="\[\033[96m\]"
+    local WHITE="\[\033[97m\]"
+    local GREY="\[\033[90m\]"
+    # * == unstages
+    # + == staged changes
+    export GIT_PS1_SHOWDIRTYSTATE="1"
+    # $ next to branch named if stashed state
+    export GIT_PS1_SHOWSTASHSTATE="1"
+    # % next to branch name of untracked files
+    export GIT_PS1_SHOWUNTRACKEDFILES="1"
+    # will show state compared to upstream
+    # < you are behind upstream
+    # > you are ahead of upstream
+    # <> you have diverged from upstream
+    # = matches upstream
+    export GIT_PS1_SHOWUPSTREAM="auto"
 
-# SETTING "LESS" AS DEFAULT PAGER AND REPLACING ALL OTHER PAGERS WITH IT
-export PAGER=less;
-alias more=$PAGER;
-alias zless=$PAGER;
+    #make that damn PS1
+    #split in lines to easy readability
+    export PS1="${debian_chroot:+($debian_chroot)}${R}${GREY}[\t] ${CYAN}\w \
+\$(__git_ps1 \"${GREY}(${DEFAULT}%s${GREY})\")\n${BLUE}\$>${R} "
+    export PS2="${R}${GREEN}||${R} "
+}
+#set the prompt by calling the wrapper
+_set_prompt
 
-# SET UP "VIM" AS DEFAULT EDITOR
-export VISUAL=vim;
-export EDITOR=$VISUAL;
+
+export PATH=${HOME}/usr/bin:${HOME}/.local/bin:${PATH}
+
+# Use most for a better (colored) manpage
+
+if [ -f "${PATH}/most" ]
+then
+    export LESS_TERMCAP_mb=$'\E[01;31m'
+    export LESS_TERMCAP_md=$'\E[01;31m'
+    export LESS_TERMCAP_me=$'\E[0m'
+    export LESS_TERMCAP_se=$'\E[0m'
+    export LESS_TERMCAP_so=$'\E[01;44;33m'
+    export LESS_TERMCAP_ue=$'\E[0m'
+    export LESS_TERMCAP_us=$'\E[01;32m'
+
+    export PAGER="/usr/bin/most -s"
+fi
