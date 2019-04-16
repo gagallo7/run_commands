@@ -29,8 +29,8 @@ function! myconfig#after() abort
     " Make tags chase upwards directories until find a tags file
     set tags=tags;/
 
-    iunmap jk
-    nunmap <C-x>
+    silent! iunmap jk
+    silent! nunmap <C-x>
 
     nnoremap <F12> :<C-\>eCmapReplace("<C-r><C-w>", "")<CR>
     vnoremap <F12> "ay:<C-\>eCmapReplace("<C-r>a", "")<CR>
@@ -40,7 +40,7 @@ function! myconfig#after() abort
 endfunction
 
 function! CmapReplace(pattern, replacement)
-    let cmd = ":%s#" . a:pattern . "#" . a:replacement .  "#g"
+    let cmd = ":%s#\\<" . a:pattern . "\\>#" . a:replacement .  "#g"
     call setcmdpos(strlen(cmd) - 1)
     return cmd
 endfunction
