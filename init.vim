@@ -2,8 +2,8 @@
 let g:spacevim_enable_debug = 1
 let g:spacevim_realtime_leader_guide = 1
 call SpaceVim#layers#load('incsearch')
-call SpaceVim#layers#load('lang#c')
-call SpaceVim#layers#load('lang#cpp')
+" call SpaceVim#layers#load('lang#c')
+" call SpaceVim#layers#load('lang#cpp')
 call SpaceVim#layers#load('lang#elixir')
 call SpaceVim#layers#load('lang#go')
 call SpaceVim#layers#load('lang#haskell')
@@ -18,7 +18,7 @@ call SpaceVim#layers#load('lang#swig')
 call SpaceVim#layers#load('lang#tmux')
 call SpaceVim#layers#load('lang#vim')
 call SpaceVim#layers#load('lang#xml')
-call SpaceVim#layers#load('shell')   
+call SpaceVim#layers#load('shell')
 call SpaceVim#layers#load('tools#screensaver')
 call SpaceVim#layers#load('lang#markdown')
 call SpaceVim#layers#load('lang#html')
@@ -36,13 +36,13 @@ let g:spacevim_enable_tabline_filetype_icon = 1
 let g:spacevim_enable_statusline_display_mode = 0
 let g:spacevim_enable_os_fileformat_icon = 1
 let g:spacevim_buffer_index_type = 1
-let g:neomake_vim_enabled_makers = []
-if executable('vimlint')
-    call add(g:neomake_vim_enabled_makers, 'vimlint') 
-endif
-if executable('vint')
-    call add(g:neomake_vim_enabled_makers, 'vint') 
-endif
+" let g:neomake_vim_enabled_makers = []
+" if executable('vimlint')
+    " call add(g:neomake_vim_enabled_makers, 'vimlint')
+" endif
+" if executable('vint')
+    " call add(g:neomake_vim_enabled_makers, 'vint')
+" endif
 if has('python3')
     let g:ctrlp_map = ''
     let g:ctrlp_extensions = ['tag']
@@ -98,8 +98,13 @@ let g:spacevim_custom_plugins = [
         \ ['tpope/vim-fugitive'],
         \ ['ARM9/arm-syntax-vim'],
         \ ['rhysd/vim-grammarous'],
+        \ ['airblade/vim-gitgutter'],
+        \ ['ntpeters/vim-better-whitespace'],
+        \ ['vim-scripts/a.vim']
         \ ]
 
+let g:spacevim_disabled_plugins = ['delimitMate']
+let g:spacevim_autocomplete_parens = 0
 
 " Long arguments multiline BeautyShot coding style indentation
 set cino+=(0
@@ -109,20 +114,24 @@ set cino+=g0
 " YCM supported snippet engine
 let g:spacevim_snippet_engine = 'ultisnips'
 
+
+let g:spacevim_enable_neomake = 'false'
+
 " ctags command center
 " Make tags chase upwards directories until find a tags file
 set tags=tags;/
-
 
 " Cscope hive
 " Use cscope absolute paths
 set csre
 cs add ../cscope.out
-nmap <leader>s :cs find s <C-R>=expand("<cword>")<CR><CR>  
-nmap <leader>g :cs find g <C-R>=expand("<cword>")<CR><CR>  
-nmap <leader>c :cs find c <C-R>=expand("<cword>")<CR><CR>  
-nmap <leader>t :cs find t <C-R>=expand("<cword>")<CR><CR>  
-nmap <leader>e :cs find e <C-R>=expand("<cword>")<CR><CR>  
-nmap <leader>f :cs find f <C-R>=expand("<cfile>")<CR><CR>  
+nmap <leader>s :cs find s <C-R>=expand("<cword>")<CR><CR>
+nmap <leader>g :cs find g <C-R>=expand("<cword>")<CR><CR>
+nmap <leader>c :cs find c <C-R>=expand("<cword>")<CR><CR>
+nmap <leader>t :cs find t <C-R>=expand("<cword>")<CR><CR>
+nmap <leader>e :cs find e <C-R>=expand("<cword>")<CR><CR>
+nmap <leader>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
 nmap <leader>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
-nmap <leader>d :cs find d <C-R>=expand("<cword>")<CR><CR>  
+nmap <leader>d :cs find d <C-R>=expand("<cword>")<CR><CR>
+
+let g:ycm_server_python_interpreter = 'python3'

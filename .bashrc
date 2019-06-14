@@ -16,8 +16,8 @@ HISTCONTROL=ignoreboth
 shopt -s histappend
 
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-HISTSIZE=1000
-HISTFILESIZE=2000
+HISTSIZE=10000
+HISTFILESIZE=20000
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
@@ -178,3 +178,19 @@ then
 
     export PAGER="/usr/bin/most -s"
 fi
+
+# SET UP "VIM" AS DEFAULT EDITOR
+export VISUAL=vim;
+export EDITOR=$VISUAL;
+
+# Functions
+function swap()
+{
+    local TMPFILE=tmp.$$
+    mv "$1" $TMPFILE && mv "$2" "$1" && mv $TMPFILE $2
+}
+
+function op()
+{
+    xdg-open "${1}" 2>/dev/null 1>/dev/null
+}
